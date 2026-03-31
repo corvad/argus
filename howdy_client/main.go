@@ -19,7 +19,7 @@ func main() {
 	addr := flag.String("addr", "localhost:8080", "server address")
 	name := flag.String("name", "David", "your name")
 	major := flag.String("major", "Computer Science", "your major")
-	town := flag.String("town", "League City, TX")
+	town := flag.String("town", "League City, TX", "your hometown")
 	class := flag.String("class", "2028", "your class year")
 	flag.Parse()
 	conn, err := grpc.NewClient(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
