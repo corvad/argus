@@ -16,13 +16,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Get Bazelisk
-      run: wget https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-linux-amd64
+    - uses: bazel-contrib/setup-bazel@0.19.0
+      with:
+    # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+    # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+    # Share repository cache between workflows.
+          repository-cache: true
 
-    - name: Chmod Bazelisk
-      run: chmod +x bazelisk-linux-amd64
     - name: Unset Android SDK
       run: echo "ANDROID_HOME=" >> $GITHUB_ENV
 
     - name: Build
-      run: ./bazelisk-linux-amd64 build ...
+      run: bazel build ...
