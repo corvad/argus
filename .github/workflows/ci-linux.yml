@@ -21,7 +21,7 @@ jobs:
 
       - name: Configure Bazel Remote Cache
         env:
-          GCP_CREDENTIALS: ${{ secrets.GCP_BUCKET }}
+          GCP_CREDENTIALS: ${{ secrets.GCS_BUCKET }}
           ARGUS_CACHE: ${{ secrets.ARGUS_CACHE }}
         run: |
           echo "${GCP_CREDENTIALS}" > /tmp/gcp-creds.json
