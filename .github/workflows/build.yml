@@ -1,32 +1,40 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
 name: Build
-
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-
+    branches: ["main"]
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: bazel-contrib/setup-bazel@0.19.0
-      with:
-    # Avoid downloading Bazel every time.
-          bazelisk-cache: true
-    # Store build cache per workflow.
-          disk-cache: ${{ github.workflow }}
-    # Share repository cache between workflows.
-          repository-cache: true
+      - name: Unset Android SDK
+        run: echo "ANDROID_HOME=" >> $GITHUB_ENV
 
-    - name: Unset Android SDK
-      run: echo "ANDROID_HOME=" >> $GITHUB_ENV
+      - name: Install Bazelisk
+        run: |
+          BAZELISK_VERSION=v1.25.0
+          EXPECTED_SHA256="<sha256-of-the-release-binary>"
+          curl -L "https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-linux-amd64" -o /usr/local/bin/bazel
+          echo "${EXPECTED_SHA256}  /usr/local/bin/bazel" | sha256sum -c -
+          chmod +x /usr/local/bin/bazel
 
-    - name: Build
-      run: bazel build ...
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Configure Bazel Remote Cache
+        run: |
+          cat >> .bazelrc <<'EOF'
+          build --remote_cache=https://storage.googleapis.com/argus-cache
+          build --google_default_credentials
+          EOF
+
+      - name: Build
+        run: bazel build //...
