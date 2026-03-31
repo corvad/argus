@@ -1,0 +1,32 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Apple Silicon Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: bazel-contrib/setup-bazel@0.19.0
+      with:
+    # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+    # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+    # Share repository cache between workflows.
+          repository-cache: true
+
+    - name: Unset Android SDK
+      run: echo "ANDROID_HOME=" >> $GITHUB_ENV
+
+    - name: Build
+      run: bazel build ...
