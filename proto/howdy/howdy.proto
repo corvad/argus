@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/corvad/argus/proto/howdy";
+
+package howdy;
+
+service Gigem {
+  rpc Trigger (GigemRequest) returns (GigemResponse) {}
+}
+
+message GigemRequest {
+  string name = 1;
+  string major = 2;
+  string town = 3;
+  string class = 4;
+}
+
+message GigemResponse {
+  string result = 1;
+}

@@ -23,7 +23,8 @@ profile.cov
 # Go workspace file
 go.work
 go.work.sum
-
+proto/**/*.pb.go
+bazel-*
 # env file
 .env
 
