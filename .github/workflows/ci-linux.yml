@@ -21,16 +21,14 @@ jobs:
 
       - name: Configure Bazel Remote Cache
         env:
-          GCP_CREDENTIALS: ${{ secrets.GCS_BUCKET }}
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
           ARGUS_CACHE: ${{ secrets.ARGUS_CACHE }}
         run: |
           echo "$GCP_CREDENTIALS" > /tmp/gcp-creds.json
-          cat >> .bazelrc <<'EOF'
-          build --remote_cache=$ARGUS_CACHE
-          build --remote_upload_local_results=true
-          build --google_credentials=/tmp/gcp-creds.json
-          EOF
-
+          echo "build --remote_cache=${ARGUS_CACHE}" >> .bazelrc
+          echo "build --remote_upload_local_results=true" >> .bazelrc
+          echo "build --google_credentials=/tmp/gcp-creds.json" >> .bazelrc
+          
       - name: Build
         run: ./bazel build //...
 
