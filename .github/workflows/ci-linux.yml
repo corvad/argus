@@ -17,18 +17,19 @@ jobs:
         run: |
           wget https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-linux-amd64
           chmod +x bazelisk-linux-amd64
-
-      - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          mv bazelisk-linux-amd64 bazel
 
       - name: Configure Bazel Remote Cache
         run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > /tmp/gcp-creds.json
           cat >> .bazelrc <<'EOF'
-          build --remote_cache=https://storage.googleapis.com/argus-cache
-          build --google_default_credentials
+          build --remote_cache=${{ secrets.ARGUS_CACHE }}
+          build --google_credentials=/tmp/gcp-creds.json
           EOF
 
       - name: Build
-        run: ./bazelisk-linux-amd64 build //...
+        run: ./bazel build //...
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f /tmp/gcp-creds.json
