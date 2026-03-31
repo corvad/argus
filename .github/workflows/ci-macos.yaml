@@ -4,7 +4,7 @@ on:
     branches: ["main"]
 jobs:
   build:
-    runs-on: macos-latest-xlarge
+    runs-on: macos-latest
     permissions:
       contents: read
     steps:
