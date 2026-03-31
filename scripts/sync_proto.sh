@@ -4,11 +4,6 @@
 # Use of this source code is governed by an MIT license
 # that can be found in the LICENSE file.
 
-
-# Copyright (c) 2026 David Corvaglia. All rights reserved.
-# Use of this source code is governed by an MIT license
-# that can be found in the LICENSE file.
-
 set -euo pipefail
 
 echo -e "generating proto files...\n"

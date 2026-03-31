@@ -37,5 +37,4 @@ func main() {
 		log.Fatalf("Yell failed: %v", err)
 	}
 	log.Printf("Yell: %s", r.GetResult())
-
 }
