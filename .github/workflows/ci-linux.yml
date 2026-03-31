@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Bazelisk
         run: |
-          sudo curl -L "https://github.com/bazelbuild/bazelisk/releases/download/latest/bazelisk-linux-amd64"
+          sudo curl -L "https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-linux-amd64"
           chmod +x bazelisk-linux-amd64
 
       - name: Authenticate to GCP
