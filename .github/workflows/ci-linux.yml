@@ -27,6 +27,7 @@ jobs:
           echo "$GCP_CREDENTIALS" > /tmp/gcp-creds.json
           cat >> .bazelrc <<'EOF'
           build --remote_cache=$ARGUS_CACHE
+          build --remote_upload_local_results=true
           build --google_credentials=/tmp/gcp-creds.json
           EOF
 
