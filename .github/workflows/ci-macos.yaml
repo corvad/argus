@@ -9,7 +9,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-
+      
+      - name: Unset Android SDK
+        run: echo "ANDROID_HOME=" >> $GITHUB_ENV
+        
       - name: Install Bazelisk
         run: |
           wget https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-darwin-arm64
