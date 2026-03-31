@@ -21,31 +21,8 @@ jobs:
 
     - name: Chmod Bazelisk
       run: chmod +x bazelisk-linux-amd64
+    - name: Unset Android SDK
+      run: echo "ANDROID_HOME=" >> $GITHUB_ENV
 
     - name: Build
-      run: ./bazelisk-linux-amd64 build //howdy_client/...
-
-
-name: Howdy Server Build
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Get Bazelisk
-      run: wget https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-linux-amd64
-
-    - name: Chmod Bazelisk
-      run: chmod +x bazelisk-linux-amd64
-
-    - name: Build
-      run: ./bazelisk-linux-amd64 build //howdy_server/...
+      run: ./bazelisk-linux-amd64 build ...
