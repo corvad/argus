@@ -1,17 +1,20 @@
 # Argus
 My new public Go monorepo.
 
-# Build
+## Build
 ```bazel build //...```
 
-# Generate .pb.go in place (fixes issues with autocomplete and go mod)
+## Regen build files
+```bazel run //:gazelle```
+
+## Generate .pb.go in place (fixes issues with autocomplete and go mod)
 ```./scripts/sync_proto.sh```
 
-# Add license headers
+## Add license headers
 ```./scripts/license.sh```
 
-# Run go mod tidy
+## Run go mod tidy
 ```./scripts/mod_tidy.sh```
 
-# License
+## License
 Project is under an MIT License.
