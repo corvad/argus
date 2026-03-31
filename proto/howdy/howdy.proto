@@ -1,3 +1,7 @@
+// Copyright (c) 2026 David Corvaglia. All rights reserved.
+// Use of this source code is governed by an MIT license
+// that can be found in the LICENSE file.
+
 syntax = "proto3";
 
 option go_package = "github.com/corvad/argus/proto/howdy";
