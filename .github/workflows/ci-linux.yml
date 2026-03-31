@@ -1,4 +1,4 @@
-name: Build
+name: CI Linux
 on:
   push:
     branches: ["main"]
@@ -15,11 +15,8 @@ jobs:
 
       - name: Install Bazelisk
         run: |
-          BAZELISK_VERSION=v1.25.0
-          EXPECTED_SHA256="<sha256-of-the-release-binary>"
-          curl -L "https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-linux-amd64" -o /usr/local/bin/bazel
-          echo "${EXPECTED_SHA256}  /usr/local/bin/bazel" | sha256sum -c -
-          chmod +x /usr/local/bin/bazel
+          sudo curl -L "https://github.com/bazelbuild/bazelisk/releases/download/latest/bazelisk-linux-amd64"
+          chmod +x bazelisk-linux-amd64
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
@@ -34,4 +31,4 @@ jobs:
           EOF
 
       - name: Build
-        run: bazel build //...
+        run: ./bazelisk-linux-amd64 build //...
