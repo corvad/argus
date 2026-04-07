@@ -22,6 +22,7 @@ func main() {
 	town := flag.String("town", "League City, TX", "your hometown")
 	class := flag.String("class", "2028", "your class year")
 	flag.Parse()
+
 	conn, err := grpc.NewClient(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)

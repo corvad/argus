@@ -9,7 +9,13 @@ option go_package = "github.com/corvad/argus/proto/logging";
 package logging;
 
 service Logger {
-  rpc Log (LogRequest) returns (LogResponse) {}
+  rpc Register (RegisterRequest) returns (Response) {}
+  rpc Log (LogRequest) returns (Response) {}
+}
+
+message Response {
+  bool success = 1;
+  string msg = 2;
 }
 
 enum LogLevel {
@@ -17,6 +23,11 @@ enum LogLevel {
   INFO = 1;
   WARN = 2;
   ERROR = 3;
+  FATAL = 4;
+}
+
+message RegisterRequest {
+  string service = 1;
 }
 
 message LogRequest {
@@ -24,8 +35,4 @@ message LogRequest {
   uint64 timestamp = 2;
   LogLevel level = 3;
   string msg = 4;
-}
-
-message LogResponse {
-  bool success = 1;
 }
