@@ -12,10 +12,17 @@ service Logger {
   rpc Log (LogRequest) returns (LogResponse) {}
 }
 
+enum LogLevel {
+  DEBUG = 0;
+  INFO = 1;
+  WARN = 2;
+  ERROR = 3;
+}
+
 message LogRequest {
   string service = 1;
   uint64 timestamp = 2;
-  string level = 3;
+  LogLevel level = 3;
   string msg = 4;
 }
 
