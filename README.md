@@ -1,5 +1,5 @@
 # Argus
-My new public Go monorepo.
+My new public monorepo.
 
 ## Build
 ```bazel build //...```
