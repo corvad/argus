@@ -14,3 +14,11 @@ platform_data(
     target = ":firmware",
     platform = "@pico-sdk//bazel/platform:rp2350",
 )
+
+genrule(
+    name = "rp2350_firmware_uf2",
+    srcs = [":rp2350_firmware"],
+    outs = ["firmware.uf2"],
+    cmd = "$(location @picotool//:picotool) uf2 convert -t elf $$(echo $(SRCS) | cut -d' ' -f1) $@",
+    tools = ["@picotool//:picotool"],
+)
